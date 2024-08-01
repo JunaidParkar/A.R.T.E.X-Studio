@@ -15,6 +15,12 @@ def init():
         os.mkdir(lib_dir)
     else:
         print("Library folder already exist. Kindly delete that folder initialize again")
+        return -1
+    for lib in required_libraries:
+        for root, dirs, files in os.walk(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Common")):
+            print(root)
+            print(dirs)
+            print(files)
 
 
 @click.command()
