@@ -1,6 +1,4 @@
-from rich import print
-from inq import ListBox
+from inquirer import prompt, text
 
-opt = ["option 1, option 2"]
-a = ListBox()
-print("\n[green italic]Copying to file[/green italic]\n")
+a = text(message="Enter your app's name")
+print(a)

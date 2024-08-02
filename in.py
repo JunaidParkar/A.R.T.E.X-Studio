@@ -1,20 +1,27 @@
 import click, inquirer, os, json, shutil
+from rich import print
+from inquirer import confirm, prompt
+from cd import studio
+
+a = studio(os.getcwd())
 
 def copy(fromPath: str, toPath: str):
+    print("\n")
     try:
         shutil.copy(src=fromPath, dst=toPath)
-        print("copying")
+        print(f"[green italic]Building libraries at {toPath}[/green italic]")
         return True
     except Exception as er:
-        print("error")
-        return er
+        print("[green italic]An error occured while building libraries")
+        return False
 
 def delete_all_contents(target_directory):
+    print("\n")
     if os.path.exists(target_directory):
         shutil.rmtree(target_directory)
-        print(f"All contents of '{target_directory}' have been deleted.")
+        print(f"[green italic]All contents of '{target_directory}' have been deleted.[/green italic]")
     else:
-        print(f"Directory '{target_directory}' does not exist.")
+        print(f"[green italic]Directory '{target_directory}' does not exist.[/green italic]")
 
 
 @click.group()
@@ -23,24 +30,7 @@ def artex():
 
 @click.command()
 def init():
-    with open(os.path.join(os.getcwd(), "config.json"), "r") as f:
-        config = json.load(f)
-        f.close()
-    required_libraries = [lib for lib in config["requiredLibraries"]]
-    if os.path.isdir(os.path.join(os.getcwd(), "library")):
-        print("Library folder already exist. Kindly delete that folder initialize again")
-        delete_all_contents(os.path.join(os.getcwd(), "library"))
-    os.mkdir(os.path.join(os.getcwd(), "library"))
-    lib_path = []
-    for lib in required_libraries:
-        for root, dirs, files in os.walk(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Common")):
-            for file in files:
-                if os.path.join(root, file).endswith(lib):
-                    lib_path.append(os.path.join(root, file))
-    print(lib_path)
-    for file in lib_path:
-        copy(fromPath=file, toPath=os.path.join(os.getcwd(), "library"))
-        pass
+    a.init()
 
 
 @click.command()

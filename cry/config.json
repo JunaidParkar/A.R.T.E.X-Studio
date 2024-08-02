@@ -1,0 +1,13 @@
+{
+    "name": "filex",
+    "version": "1.0.0",
+    "packageName": "artex.filex",
+    "requiredLibraries": [
+        "cursor.js",
+        "CREngine.js",
+        "anime.js",
+        "gsap.js"
+    ],
+    "publisher": "junaid",
+    "includeDir": []
+}
