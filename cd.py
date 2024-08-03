@@ -59,6 +59,12 @@ class studio:
         os.mkdir(os.path.join(self.__cwd, "src"))
         print("\n")
         print("[green italic]Creating index.html.[/green italic]")
+        html_data = f"""<!DOCTYPE html>\n<html lang="en">\n\n<head>\n\t<meta charset="UTF-8">\n\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n\t<title>{app_name}</title>\n</head>\n\n<body>\n\n"""
+        for libr in app_libraries:
+            html_data += f"\n<script src='library/{libr}' ></script>"
+        html_data += """\n</body>\n\n</html>"""
+        with open(os.path.join(self.__cwd, "index.html"), "w") as h:
+            h.write(html_data)
         print("\n")
         print("[green italic]Your project have been initialized. If you want to add any library later then you can use command `artex addLibrary` in your current working directory.[/green italic]")
         print("[red bold]Note: config.json must not be deleted.[/red bold]")
