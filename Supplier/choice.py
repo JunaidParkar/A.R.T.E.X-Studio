@@ -1,5 +1,6 @@
 import os
 import msvcrt
+from rich import print as pr
 
 def get_choice(choices):
     def print_choices(selected_index):
@@ -45,8 +46,10 @@ def get_choice(choices):
     # print(f"You selected: {selected_choice}")
 
 
-def get_choices_with_checkboxes(choices):
+def get_choices_with_checkboxes(msg, choices):
     selected_indices = set()
+
+    pr(f"[[yellow]?[/yellow]] {msg}")
     
     def print_choices(selected_index):
         for idx, choice in enumerate(choices):
@@ -85,8 +88,12 @@ def get_choices_with_checkboxes(choices):
 
     for _ in range(len(choices)):
         print("\033[F\033[K", end='')  # Move cursor up and clear the line
-
-    return [choices[idx] for idx in selected_indices]
+    if selected_indices:
+        pr("    " + "\t".join([f"[yellow]{choices[idx]}[/yellow]" for idx in selected_indices]))
+        return [choices[idx] for idx in selected_indices]
+    else:
+        print("    []")
+        return []
 
 # Example usage
 # choices = ["Option 1", "Option 2", "Option 3", "Option 4"]

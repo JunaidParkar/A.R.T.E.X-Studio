@@ -1,18 +1,18 @@
 import click, inquirer, os, json, shutil
 from rich import print
 from inquirer import confirm, prompt
-from cd import studio
+from Supplier import Studio
 
-a = studio(os.getcwd())
+a = Studio(os.getcwd())
 
 def copy(fromPath: str, toPath: str):
     print("\n")
     try:
         shutil.copy(src=fromPath, dst=toPath)
-        print(f"[green italic]Building libraries at {toPath}[/green italic]")
+        print(f"[green italic]Building library at {os.path.normpath(toPath)}[/green italic]")
         return True
     except Exception as er:
-        print("[green italic]An error occured while building libraries")
+        print("[red italic]An error occured while building libraries.[/red italic]")
         return False
 
 def delete_all_contents(target_directory):
@@ -39,7 +39,7 @@ def pack():
 
 @click.command()
 def build():
-    print("building")
+    a.build()
 
 artex.add_command(init)
 artex.add_command(pack)
